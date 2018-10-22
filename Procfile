@@ -1,1 +1,1 @@
-web: gunicorn aimeehack:app
+web: gunicorn app:app
