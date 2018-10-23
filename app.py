@@ -1,13 +1,14 @@
 from flask import Flask,request,jsonify, render_template
 import pusher
+import os
 
 app = Flask(__name__)
 
 pusher_client = pusher.Pusher(
-  app_id='625201',
-  key='706ab48dca940577335b',
-  secret='60d12612ff0ece2809fb',
-  cluster='eu',
+  app_id=os.getenv('PUSHER_APP_ID'),
+  key=os.getenv('PUSHER_KEY'),
+  secret=os.getenv('PUSHER_SECRET'),
+  cluster=os.getenv('PUSHER_CLUSTER'),
   ssl=True
 )
 
