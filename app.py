@@ -2,16 +2,16 @@ import json
 
 import requests
 from flask import Flask, request, jsonify, render_template
+import dialogflow
 import pusher
-import dialogflow_v2 as dfv2
 import os
 
 app = Flask(__name__)
 
 pusher_client = pusher.Pusher(
-    app_id=os.getenv('PUSHER_APP_ID'),
-    key=os.getenv('PUSHER_KEY'),
-    secret=os.getenv('PUSHER_SECRET'),
+    app_id='625201',
+    key='706ab48dca940577335b',
+    secret='60d12612ff0ece2809fb',
     cluster=os.getenv('PUSHER_CLUSTER'),
     ssl=True
 )
@@ -48,13 +48,13 @@ def get_movie_detail():
 
 def detect_intent_texts(project_id, session_id, text, language_code):
 
-        session_client = dfv2.SessionsClient()
+        session_client = dialogflow.SessionsClient()
         session = session_client.session_path(project_id, session_id)
 
         if text:
-            text_input = dfv2.types.TextInput(
+            text_input = dialogflow.types.TextInput(
                 text=text, language_code=language_code)
-            query_input = dfv2.types.QueryInput(text=text_input)
+            query_input = dialogflow.types.QueryInput(text=text_input)
             response = session_client.detect_intent(
                 session=session, query_input=query_input)
 
@@ -68,6 +68,7 @@ def send_message():
         fulfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
         response_text = {"message":  fulfillment_text}
        # socketId = request.form['socketId']
+        print(response_text)
         pusher_client.trigger('AIMEE', 'new_message',
                               {'human_message': message, 'bot_message': fulfillment_text})
 

@@ -1,11 +1,11 @@
-Pusher.logToConsole = true;
+
 const pusher = new Pusher('706ab48dca940577335b', {
     cluster: 'eu',
     encrypted: true
 });
 
 // Subscribe to movie_bot channel
-const channel = pusher.subscribe('AIMEE');
+const channel = pusher.subscribe('movie_bot');
 
   // bind new_message event to movie_bot channel
   channel.bind('new_message', function(data) {
