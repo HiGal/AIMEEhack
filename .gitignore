@@ -4,6 +4,8 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+.idea/
+__pycache__
 # Generated files
 .idea/**/contentModel.xml
 
@@ -36,7 +38,7 @@ cmake-build-*/
 
 # File-based project format
 *.iws
-
+*.iml
 # IntelliJ
 out/
 
