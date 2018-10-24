@@ -2,5 +2,5 @@ Flask==1.0.2
 requests==2.18.4
 dialogflow==0.4.0
 python-dotenv==0.8.2
+gunicorn==19.6.0
 pusher
-gunicorn==0.14.3
