@@ -25,18 +25,24 @@ def index():
 @app.route('/get_movie_detail', methods=['POST'])
 def get_movie_detail():
     data = request.get_json(silent=True)
+
     movie = data['queryResult']['parameters']['movie']
     api_key = os.getenv('OMDB_API_KEY')
 
-    movie_detail = requests.get('http://www.omdbapi.com/?t={0}&apikey={1}'.format(movie, api_key)).content
+    movie_detail = requests.get('https://api.themoviedb.org/3/search/movie?api_key={0}&query={1}&language=ru'.format(api_key,movie)).content
     movie_detail = json.loads(movie_detail)
+    movie_detail = movie_detail['results'][0]
 
-    response = """
-            Title : {0}
-            Released : {1}
-            Actors : {2}
-            Plot : {3}
-    """.format(movie_detail['Title'], movie_detail['Released'], movie_detail['Actors'], movie_detail['Plot'])
+    video = requests.get("https://api.themoviedb.org/3/movie/{0}/videos?api_key={1}".format(movie_detail['id'],api_key)).content
+    video = json.loads(video)
+
+    response = ("{{\"Type\": \"film\",\"Title\" : \" {0} \" ,\"Released\" : \" {1} \","
+                "\"Video\":\"https://www.youtube.com/embed/{2}\","
+                "\"Poster\": \"https://image.tmdb.org/t/p/w500/{3}\"}}")\
+        .format(movie_detail['title'],
+                movie_detail['release_date'],
+                video['results'][0]['key'],
+                movie_detail['poster_path'])
 
     reply = {
 
@@ -65,7 +71,7 @@ def detect_intent_texts(project_id, session_id, text, language_code):
 def send_message():
         message = request.form['message']
         project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-        fulfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
+        fulfillment_text = detect_intent_texts(project_id, "unique", message, 'ru')
         response_text = {"message":  fulfillment_text}
        # socketId = request.form['socketId']
         print(response_text)
