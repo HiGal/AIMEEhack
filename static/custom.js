@@ -34,7 +34,6 @@ function submit_message(message) {
     function handle_response(data) {
         // append the bot repsonse to the div
         mes = JSON.parse(data.message);
-        ;
         if (mes['Type'] === 'film') {
             $('.chat-container').append(`
             <div class="chat-message col-md-6 offset-md-6 bot-message">
@@ -45,6 +44,8 @@ function submit_message(message) {
                     <div class="col-sm-8">
                         <div><b>Название:</b> ${mes['Title']}</div>
                         <div><b>Дата выхода:</b> ${mes['Released']} </div>
+                        <div><b>Лозунг:</b> ${mes['Tagline']}</div>
+                        <div><b>Оценка:</b> ${mes['Score']}</div>
                     </div>  
                 </div>
             </div>
