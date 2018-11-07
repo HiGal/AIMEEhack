@@ -1,11 +1,10 @@
 from flask import Flask, request, jsonify, render_template
-from movie_bot import movie_bot
+from movie_bot import get_movie_detail
 import dialogflow
 import pusher
 import os
 
 app = Flask(__name__)
-app.register_blueprint(movie_bot)
 
 pusher_client = pusher.Pusher(
     app_id='625201',
@@ -16,20 +15,26 @@ pusher_client = pusher.Pusher(
 )
 
 
-
 @app.route('/')
 def index():
     return render_template('chat.html')
 
 
-
+@app.route('/get_detail', methods=['POST'])
+def get_detail():
+    data = request.get_json(silent=True)
+    typeof = list(data['queryResult']['parameters'].keys()).pop()
+    if typeof == 'movie':
+        json_obj = get_movie_detail(data)
+    return json_obj
 
 
 def detect_intent_texts(project_id, session_id, text, language_code):
     """
         Finding keywords (intents) in query string
         :return fullfillment text according to found intent text
-        """
+    """
+
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(project_id, session_id)
 
@@ -45,10 +50,13 @@ def detect_intent_texts(project_id, session_id, text, language_code):
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
+
     """
-        trigger front end using pusher api
-        :return: response text as JSON
-        """
+    trigger front end using pusher api
+    :return: response text as JSON
+
+    """
+
     message = request.form['message']
     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
     fulfillment_text = detect_intent_texts(project_id, "unique", message, 'ru')

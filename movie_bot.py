@@ -1,16 +1,10 @@
-
 from flask import request, jsonify, Blueprint
 import requests
 import json
 import os
 
-movie_bot = Blueprint('movie_bot', __name__,template_folder='templates')
 
-@movie_bot.route('/get_movie_detail', methods=['POST'])
-def get_movie_detail():
-    data = request.get_json(silent=True)
-    print(data)
-
+def get_movie_detail(data):
     movie = data['queryResult']['parameters']['movie']
     api_key = os.getenv('OMDB_API_KEY')
 
