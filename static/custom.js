@@ -13,7 +13,7 @@ channel.bind('new_message', function (data) {
         <div class="chat-message col-md-5 human-message">
             ${input_message}
         </div>
-    `)
+    `);
 
     // Append bot message
     $('.chat-container').append(`
@@ -33,9 +33,10 @@ function submit_message(message) {
 
     function handle_response(data) {
         // append the bot repsonse to the div
-        mes = JSON.parse(data.message);
-        if (mes['Type'] === 'film') {
-            $('.chat-container').append(`
+        try {
+            mes = JSON.parse(data.message);
+            if (mes['Type'] === 'film') {
+                $('.chat-container').append(`
             <div class="chat-message col-md-6 offset-md-6 bot-message">
                 <div class="row">
                     <div class=" col-sm-4">
@@ -54,7 +55,17 @@ function submit_message(message) {
                 <iframe width="350" height="200" src="${mes['Video']}"></iframe>
             </div>
       `)
+            }
+
+        } catch (e) {
+
+            $('.chat-container').append(`
+            <div class="chat-message col-md-6 offset-md-6 bot-message">
+                ${data.message}
+            </div>
+             `)
         }
+
         // remove the loading indicator
         $("#loading").remove();
     }
@@ -63,7 +74,7 @@ function submit_message(message) {
 
 $('#target').on('submit', function (e) {
     e.preventDefault();
-    const input_message = $('#input_message').val()
+    const input_message = $('#input_message').val();
     // return if the user does not enter any text
     if (!input_message) {
         return
@@ -73,17 +84,17 @@ $('#target').on('submit', function (e) {
         <div class="chat-message col-md-5 human-message">
             ${input_message}
         </div>
-    `)
+    `);
 
     // loading
     $('.chat-container').append(`
         <div class="chat-message text-center col-md-2 offset-md-10 bot-message" id="loading">
             <b>...</b>
         </div>
-    `)
+    `);
 
     // clear the text input
-    $('#input_message').val('')
+    $('#input_message').val('');
 
     // send the message
     submit_message(input_message)
