@@ -23,6 +23,7 @@ def index():
 @app.route('/get_detail', methods=['POST'])
 def get_detail():
     data = request.get_json(silent=True)
+    print(data)
     typeof = list(data['queryResult']['parameters'].keys()).pop()
     if typeof == 'movie':
         json_obj = get_movie_detail(data)

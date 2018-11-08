@@ -42,7 +42,7 @@ function submit_message(message) {
                     <div class=" col-sm-4">
                      <img src="${mes['Poster']}" width="120px">
                      </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-8 film-widget">
                         <div><b>Название:</b> ${mes['Title']}</div>
                         <div><b>Дата выхода:</b> ${mes['Released']} </div>
                         <div><b>Лозунг:</b> ${mes['Tagline']}</div>
@@ -54,7 +54,16 @@ function submit_message(message) {
             <div class="chat-message col-md-6 offset-md-6 bot-message">
                 <iframe width="350" height="200" src="${mes['Video']}"></iframe>
             </div>
-      `)
+            `);
+
+            if(mes['Status'] === 'true'){
+                $('.film-widget').append(`
+                    <div><a class="btn btn-primary" href="https://karofilm.ru/theatres/26" target="_blank">
+                        Купить билеты
+                    </a>
+                    </div>
+                `)
+            }
             }
 
         } catch (e) {
