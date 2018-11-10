@@ -11,6 +11,8 @@ def get_ticket_list(data):
 
     iata_details = requests.get('https://www.travelpayouts.com/widgets_suggest_params?q=%20{0}%20{1}'.
                                 format(origin, destination)).content
+    iata_details = json.loads(iata_details)
+
     origin = iata_details['origin']['iata']
     destination = iata_details['destination']['iata']
     ticket_details = requests.get(
@@ -25,9 +27,9 @@ def get_ticket_list(data):
                 ) \
         .format(origin,
                 destination,
-                ticket_details['data'][destination.__str__()][0]['price'],
-                ticket_details['data'][destination.__str__()][0]['departure_at'],
-                ticket_details['data'][destination.__str__()][0]['return_at']
+                ticket_details['data'][destination]['0']['price'],
+                ticket_details['data'][destination]['0']['departure_at'],
+                ticket_details['data'][destination]['0']['return_at']
                 )
 
     reply = {
