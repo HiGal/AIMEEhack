@@ -14,9 +14,12 @@ def speech_to_text(filename=None, bytes=None):
         return UNDEFINED_STRING
 
     # файл распознования
-    if(filename):
-        headers = {"Content-Type": 'audio/x-wav'}
+    headers = {"Content-Type": 'audio/ogg;codecs=opus'}
+
+    if filename:
         data = open(filename, 'rb')
+    elif bytes:
+        data = bytes
     else:
         return UNDEFINED_STRING
 
