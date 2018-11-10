@@ -46,20 +46,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
          // e.data contains a blob representing the recording
          audio.src = URL.createObjectURL(e.data);
          audio.play();
-         var formData = new FormData();
-         var fileType = 'audio';
-         var fileName = 'output.wav';
-         formData.append(fileType, e.data, fileName);
-         $.ajax({
-            type: 'POST',
-            url: 'http://localhost/',
-            data: formData,
-            processData: false,  // prevent jQuery from converting the data
-            contentType: false,  // prevent jQuery from overriding content type
-            success: function(response) {
-            alert(response);
-    }
-});
+
+
+         fetch('/detect_voice', {
+            method: "post",
+            body: e.data,
+
+         })
+
 }
 
 } else {

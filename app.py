@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify, render_template
 from movie_bot import get_movie_detail
 from ticket_bot import get_ticket_list
+import requests
 import dialogflow
 import pusher
 import os
+import speech
+from requests_toolbelt.multipart import decoder
 
 app = Flask(__name__)
 
@@ -55,7 +58,6 @@ def detect_intent_texts(project_id, session_id, text, language_code):
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
-
     """
     trigger front end using pusher api
     :return: response text as JSON
@@ -72,6 +74,16 @@ def send_message():
                           {'human_message': message, 'bot_message': fulfillment_text})
 
     return jsonify(response_text)
+
+
+@app.route("/detect_voice", methods=['POST'])
+def detect_voice():
+    f = open('./file.ogg', 'wb')
+    f.write(request.data)
+    f.close()
+    print(requests.post(url='http://127.0.0.1:5000/send_message', data={"message": speech.speech_to_text('file.ogg')}).content)
+    return requests.post(url='http://127.0.0.1:5000/send_message', data={"message": speech.speech_to_text('file.ogg')}).content
+
 
 
 if __name__ == '__main__':
