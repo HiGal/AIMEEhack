@@ -1,10 +1,11 @@
+import os
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import time
 
 import requests
 import json
 
-from app import detect_intent_texts
 
 updater = Updater(token='570424499:AAGUvT9EIzpFMZAaxX18q5T-rygcUZJaNDw')
 dispatcher = updater.dispatcher
@@ -13,13 +14,10 @@ print("Bot is alive")
 
 
 def get_answer(text):
-    url = "http://127.0.0.1:5000/"
-    headers = {'Content-type': 'application/json',
-               'Accept': 'text/plain',
-               'Content-Encoding': 'utf-8'}
-    fulfillment_text = detect_intent_texts("telegram", "unique", text, 'ru')
-    response_text = {"message": fulfillment_text}
-    question = requests.post(url, data=json.dumps(response_text), headers=headers)
+    url = "https://94d914e9.ngrok.io/send_message"
+    response_text = {'message': text}
+    print(json.dumps(response_text))
+    question = requests.post(url=url, data=json.dumps(response_text))
     print(question)
     response = question.json()
     print(response)
