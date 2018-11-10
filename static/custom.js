@@ -67,14 +67,19 @@ function submit_message(message) {
             }
 
             if (mes["Type"] === "ticket") {
-             alert('PSOSO');
                 $('.chat-container').append(`
             <div class="chat-message col-md-6 offset-md-6 bot-message">
                 <div class="row">
-                    <div class="class="col-sm-8 film-widget">
-                        <div><b>Цена:</b> ${mes["Price"]}</div>
+                    <div class="col-sm-8">
+                        <div><b>Откуда:</b> ${mes["Origin"]}</div>
+                        <div><b>Куда:</b> ${mes["Destination"]}</div>
+                        <div><b>Цена:</b> ${(((mes["Price"]).toString()).replace('T', ' ')).replace('Z', ' ')}</div>
                         <div><b>Дата отправления:</b> ${mes["Departure"]} </div>
-                        <div><b>Предложение:</b> ${mes["Insurance"]}  <p><a href="https://sgabs.ru/">Узнать больше</a></p> </div>
+                        <div><b>Предложение:</b> ${mes["Insurance"]}</div>
+                         <div><a class="btn btn-primary" href="https://sgabs.ru/" target="_blank">
+                        Узнать больше
+                    </a>
+                    </div>
                     </div>  
                 </div>
             </div>
