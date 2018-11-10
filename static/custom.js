@@ -22,16 +22,7 @@ channel.bind('new_message', function (data) {
         </div>
     `)
 });
-
-
-function submit_message(message) {
-
-    $.post("/send_message", {
-        message: message,
-        socketId: pusher.connection.socket_id
-    }, handle_response);
-
-    function handle_response(data) {
+function handle_response(data) {
         // append the bot repsonse to the div
         try {
             mes = JSON.parse(data.message);
@@ -76,7 +67,7 @@ function submit_message(message) {
                         <div><b>Цена:</b> ${(((mes["Price"]).toString()).replace('T', ' ')).replace('Z', ' ')}</div>
                         <div><b>Дата отправления:</b> ${mes["Departure"]} </div>
                         <div><b>Предложение:</b> ${mes["Insurance"]}</div>
-                         <div><a class="btn btn-primary" href="https://sgabs.ru/" target="_blank">
+                         <div><a class="btn btn-primary" href="https://sgabs.ru/products/pilgrim.php" target="_blank">
                         Узнать больше
                     </a>
                     </div>
@@ -99,6 +90,15 @@ function submit_message(message) {
         // remove the loading indicator
         $("#loading").remove();
     }
+
+function submit_message(message) {
+
+    $.post("/send_message", {
+        message: message,
+        socketId: pusher.connection.socket_id
+    }, handle_response);
+
+
 }
 
 

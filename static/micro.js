@@ -52,6 +52,11 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             method: "post",
             body: e.data,
 
+         }).then(function (response) {
+             response.json().then(function (data) {
+
+                 handle_response(data)
+             })
          })
 
 }

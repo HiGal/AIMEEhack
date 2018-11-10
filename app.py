@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, request, jsonify, render_template
 from movie_bot import get_movie_detail
 from ticket_bot import get_ticket_list
@@ -81,8 +83,9 @@ def detect_voice():
     f = open('./file.ogg', 'wb')
     f.write(request.data)
     f.close()
-    print(requests.post(url='http://127.0.0.1:5000/send_message', data={"message": speech.speech_to_text('file.ogg')}).content)
-    return requests.post(url='http://127.0.0.1:5000/send_message', data={"message": speech.speech_to_text('file.ogg')}).content
+    resp = requests.post(url='http://127.0.0.1:5000/send_message', data={"message": speech.speech_to_text('file.ogg')})
+    print(resp.json())
+    return jsonify(resp.json())
 
 
 
