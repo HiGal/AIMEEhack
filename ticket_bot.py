@@ -23,12 +23,13 @@ def get_ticket_list(data):
     print(ticket_details)
     insurance = calculate_ensurance(ticket_details)
 
-    response = ("{{\"Type\": \"ticket\",\"Origin\" : \" {0} \" ,\"Destination\" : \" {1} \", \"Price\" : \" {2}"
-                " \", ""\"Departure\" : \" {3} \"}}"
+    response = ("{{\"Type\": \"ticket\", \"Origin\": \"{0}\", \"Destination\": \"{1}\", \"Price\": \"{2}"
+                "\", \"Departure\": \"{3}\", \"Insurance\": \"{4}\"}}"
                 ).format(o_city,
                          d_city,
                          ticket_details['data'][destination]['0']['price'],
-                         ticket_details['data'][destination]['0']['departure_at'])
+                         ticket_details['data'][destination]['0']['departure_at'],
+                         insurance)
     reply = {
 
         'fulfillmentText': response
