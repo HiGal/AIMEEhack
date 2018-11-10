@@ -57,6 +57,21 @@ function submit_message(message) {
       `)
             }
 
+            if (mes['Type'] === 'ticket') {
+                $('.chat-container').append(`
+            <div class="chat-message col-md-6 offset-md-6 bot-message">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div><b>Цена:</b> ${mes['price']}</div>
+                        <div><b>Дата отправления:</b> ${mes['departure_at']} </div>
+                        <div><b>Предложение:</b> ${mes['insurance']}  <p><a href="https://sgabs.ru/">Узнать больше</a></p> </div>
+                    </div>  
+                </div>
+            </div>
+            
+      `)
+            }
+
         } catch (e) {
 
             $('.chat-container').append(`

@@ -21,15 +21,17 @@ def get_ticket_list(data):
 
     ticket_details = json.loads(ticket_details)
     print(ticket_details)
+    insurance = calculate_ensurance(ticket_details)
 
     response = ("{{\"Type\": \"ticket\",\"Origin\" : \" {0} \" ,\"Destination\" : \" {1} \", \"Price\" : \" {2} \", "
-                "\"Departure\" : \" {3} \", \"Arrive\" : \" {4} \""
+                "\"Departure\" : \" {3} \", \"Arrive\" : \" {4} \", \"Insurance\" : \" {5}\""
                 ) \
         .format(origin,
                 destination,
                 ticket_details['data'][destination]['0']['price'],
                 ticket_details['data'][destination]['0']['departure_at'],
-                ticket_details['data'][destination]['0']['return_at']
+                ticket_details['data'][destination]['0']['return_at'],
+                insurance
                 )
 
     reply = {
@@ -38,3 +40,7 @@ def get_ticket_list(data):
     }
 
     return jsonify(reply)
+
+
+def calculate_ensurance(ticket_details):
+    return "Вы можете застраховать себя от несчастных случаев, потери багажа и задержки рейса"
