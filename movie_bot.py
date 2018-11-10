@@ -55,5 +55,5 @@ def get_movie_detail(data):
 
         'fulfillmentText': response
     }
-
+    print(jsonify(reply))
     return jsonify(reply)
