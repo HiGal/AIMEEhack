@@ -17,7 +17,7 @@ def get_answer(text):
     url = "https://94d914e9.ngrok.io/send_message"
     response_text = {'message': text}
     print(json.dumps(response_text))
-    question = requests.post(url=url, data=json.dumps(response_text))
+    question = requests.post(url=url, data=response_text)
     print(question)
     response = question.json()
     print(response)
