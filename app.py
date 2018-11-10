@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from movie_bot import get_movie_detail
+from ticket_bot import get_ticket_list
 import dialogflow
 import pusher
 import os
@@ -25,8 +26,11 @@ def get_detail():
     data = request.get_json(silent=True)
     print(data)
     typeof = list(data['queryResult']['parameters'].keys()).pop()
+    json_obj = {}
     if typeof == 'movie':
         json_obj = get_movie_detail(data)
+    if list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
+        json_obj = get_ticket_list(data)
     return json_obj
 
 
