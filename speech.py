@@ -3,18 +3,19 @@ from bs4 import BeautifulSoup
 import uuid
 import os
 
-UNDEFINED_STRING='undefined'
+UNDEFINED_STRING = 'undefined'
+
 
 def speech_to_text(filename=None, bytes=None):
     request_id = uuid.uuid4().hex
     key = os.getenv('YANDEX_API_KEY')
-    if(key):
+    if (key):
         url = 'https://asr.yandex.net/asr_xml?key=' + key + '&uuid=' + request_id + '&topic=queries&lang=ru-RU'
     else:
         return UNDEFINED_STRING
 
     # файл распознования
-    if(filename):
+    if (filename):
         headers = {"Content-Type": 'audio/x-wav'}
         data = open(filename, 'rb')
     else:

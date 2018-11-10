@@ -6,4 +6,4 @@ dialogflow
 python-dotenv==0.8.2
 gunicorn==19.6.0
 pusher
-gunicorn
+python-telegram-bot

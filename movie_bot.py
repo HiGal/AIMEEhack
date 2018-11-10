@@ -32,9 +32,8 @@ def get_movie_detail(data):
 
     inTheatres = 'false'
 
-    if (today-date).total_seconds() < THREE_WEEKS:
+    if (today - date).total_seconds() < THREE_WEEKS:
         inTheatres = 'true'
-
 
     # creating response and creating answer in json
     response = ("{{\"Type\": \"film\",\"Title\" : \" {0} \" ,\"Released\" : \" {1} \","
