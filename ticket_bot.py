@@ -5,12 +5,12 @@ import os
 
 
 def get_ticket_list(data):
-    origin = data['queryResult']['parameters']['geo-city']
-    destination = data['queryResult']['parameters']['geo-city1']
+    o_city = data['queryResult']['parameters']['geo-city']
+    d_city = data['queryResult']['parameters']['geo-city1']
     api_key = os.getenv('TICKET_API')
 
     iata_details = requests.get('https://www.travelpayouts.com/widgets_suggest_params?q=%20{0}%20{1}'.
-                                format(origin, destination)).content
+                                format(o_city, d_city)).content
     iata_details = json.loads(iata_details)
 
     origin = iata_details['origin']['iata']
@@ -23,22 +23,22 @@ def get_ticket_list(data):
     print(ticket_details)
     insurance = calculate_ensurance(ticket_details)
 
-    response = ("{{\"Type\": \"ticket\",\"Origin\" : \" {0} \" ,\"Destination\" : \" {1} \", \"Price\" : \" {2} \", "
-                "\"Departure\" : \" {3} \", \"Arrive\" : \" {4} \", \"Insurance\" : \" {5}\""
-                ) \
-        .format(origin,
-                destination,
-                ticket_details['data'][destination]['0']['price'],
-                ticket_details['data'][destination]['0']['departure_at'],
-                ticket_details['data'][destination]['0']['return_at'],
-                insurance
-                )
-
+    response = {}
+    for i in range(len(ticket_details['data'][destination].keys())):
+        print(ticket_details['data'][destination][str(i)]['departure_at'])
+        response.update({str(i):("{{\"Type\": \"ticket\",\"Origin\" : \" {0} \" ,\"Destination\" : \" {1} \", \"Price\" : \" {2}"
+                        " \", ""\"Departure\" : \" {3} \", \"Arrive\" : \" {4} \"}}"
+                    ).format(o_city,
+                             d_city,
+                             ticket_details['data'][destination][str(i)]['price'],
+                             ticket_details['data'][destination][str(i)]['departure_at'],
+                             ticket_details['data'][destination][str(i)]['return_at'])})
     reply = {
 
         'fulfillmentText': response
     }
 
+    print(jsonify(reply))
     return jsonify(reply)
 
 
