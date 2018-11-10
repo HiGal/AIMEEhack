@@ -5,8 +5,8 @@ import os
 
 
 def get_ticket_list(data):
-    origin = data['query_result']['parameters']['origin']
-    destination = data['query_result']['parameters']['destination']
+    origin = data['queryResult']['parameters']['geo-city']
+    destination = data['queryResult']['parameters']['geo-city1']
     api_key = os.getenv('TICKET_API')
 
     ticket_details = requests.get(
@@ -14,6 +14,7 @@ def get_ticket_list(data):
         'token={2}'.format(origin, destination, api_key)).content
 
     ticket_details = json.loads(ticket_details)
+    print(ticket_details)
 
     response = ("{{\"Type\": \"ticket\",\"Origin\" : \" {0} \" ,\"Destination\" : \" {1} \", \"Price\" : \" {2} \", "
                 "\"Departure\" : \" {3} \", \"Arrive\" : \" {4} \""

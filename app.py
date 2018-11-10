@@ -24,10 +24,12 @@ def index():
 @app.route('/get_detail', methods=['POST'])
 def get_detail():
     data = request.get_json(silent=True)
+    print(data)
     typeof = list(data['queryResult']['parameters'].keys()).pop()
+    json_obj = {}
     if typeof == 'movie':
         json_obj = get_movie_detail(data)
-    if typeof == 'tickets':
+    if list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
         json_obj = get_ticket_list(data)
     return json_obj
 

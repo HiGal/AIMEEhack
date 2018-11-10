@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../static/style.css">
         <title>AIMEE chat-bot</title>
       </head>
       <body>
@@ -18,17 +19,24 @@
                         <div class="chat-container" style="overflow: auto; max-height: 80vh">
                             <!-- chat messages -->
                         </div>
-                        <form id="target">
-                           <input class="input" type="text" value="" placeholder="Enter message..." id="input_message"/>
-                           <input type="submit" hidden>
+                        <form id="target" >
+                            <div class="row">
+                                <input class="input col-md-11" type="text" value="" placeholder="Enter message..." id="input_message"/>
+                                <i class="fa fa-microphone col-md-1" style="font-size:48px;color:gray;margin-top:39px"
+                                   id="mic" onclick="mouseClick()" ></i>
+                            </div>
+                            <input type="submit" hidden>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
         <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-        <script src="{{ url_for('static', filename='custom.js')}}"></script>
+          <script src="../static/micro.js"></script>
+        <script src="../static/custom.js"></script>
+
       </body>
     </html>
