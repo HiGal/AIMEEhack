@@ -25,7 +25,7 @@ def get_ticket_list(data):
                 video['results'][0]['key'],
                 movie_detail['poster_path'],
                 movie_detail['tagline'],
-                movie_detail['vote_average']);print("ur mom gay")
+                movie_detail['vote_average'])
 
     reply = {
 
