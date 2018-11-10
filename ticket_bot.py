@@ -23,16 +23,12 @@ def get_ticket_list(data):
     print(ticket_details)
     insurance = calculate_ensurance(ticket_details)
 
-    response = {}
-    for i in range(len(ticket_details['data'][destination].keys())):
-        print(ticket_details['data'][destination][str(i)]['departure_at'])
-        response.update({str(i):("{{\"Type\": \"ticket\",\"Origin\" : \" {0} \" ,\"Destination\" : \" {1} \", \"Price\" : \" {2}"
-                        " \", ""\"Departure\" : \" {3} \", \"Arrive\" : \" {4} \"}}"
-                    ).format(o_city,
-                             d_city,
-                             ticket_details['data'][destination][str(i)]['price'],
-                             ticket_details['data'][destination][str(i)]['departure_at'],
-                             ticket_details['data'][destination][str(i)]['return_at'])})
+    response = ("{{\"Type\": \"ticket\",\"Origin\" : \" {0} \" ,\"Destination\" : \" {1} \", \"Price\" : \" {2}"
+                " \", ""\"Departure\" : \" {3} \"}}"
+                ).format(o_city,
+                         d_city,
+                         ticket_details['data'][destination]['0']['price'],
+                         ticket_details['data'][destination]['0']['departure_at'])
     reply = {
 
         'fulfillmentText': response
