@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import uuid
 import os
 
-UNDEFINED_STRING='undefined'
+UNDEFINED_STRING='Не распознано'
 
 def speech_to_text(filename=None, bytes=None):
     request_id = uuid.uuid4().hex
