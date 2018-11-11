@@ -64,8 +64,8 @@ function handle_response(data) {
                     <div class="col-sm-8">
                         <div><b>Откуда:</b> ${mes["Origin"]}</div>
                         <div><b>Куда:</b> ${mes["Destination"]}</div>
-                        <div><b>Цена:</b> ${(((mes["Price"]).toString()).replace('T', ' ')).replace('Z', ' ')}</div>
-                        <div><b>Дата отправления:</b> ${mes["Departure"]} </div>
+                        <div><b>Цена:</b> ${mes["Price"]}<b> руб.</b></div>
+                        <div><b>Дата отправления:</b> ${((mes["Departure"].toString()).replace('T', ' ')).replace('Z', ' ')} </div>
                         <div><b>Предложение:</b> ${mes["Insurance"]}</div>
                          <div><a class="btn btn-primary" href="https://sgabs.ru/products/pilgrim.php" target="_blank">
                         Узнать больше
