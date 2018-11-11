@@ -37,9 +37,10 @@ def text_message(bot, update):
 
     temp_text = str(message.text).lower()
     answer = get_answer(temp_text)
+    responseView(bot, update, answer)
 
 
-def response(bot, update, answer: str):
+def responseView(bot, update, answer: str):
     chat_id = update.message.chat_id
     if not answer.find("Type") == -1:
         answer_dict = json.loads(answer)
@@ -97,7 +98,7 @@ def voice_message(bot, update):
     url = NGROK + "/detect_voice"
     question = requests.post(url=url, data=file.content)
     response = question.json()
-    response(bot, update, response['message'])
+    responseView(bot, update, response['message'])
 
 
 def start_command(bot, update):
