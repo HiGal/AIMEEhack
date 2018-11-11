@@ -64,19 +64,25 @@ def responseView(bot, update, answer: str):
             bot.send_message(chat_id=chat_id, text="Вот несколько банкоматов поблизости:")
             bot.send_location(chat_id=chat_id, latitude=55.780311, longitude=49.133646, live_period=80)
             bot.send_location(chat_id=chat_id, latitude=55.779603, longitude=49.135085, live_period=80)
-        elif answer_dict["Type"] == 'auto':
-            bot.send_message(chat_id=update.message.chat_id, text="Вот несколько наших автосалонов поблизости")
-            bot.send_message(chat_id=update.message.chat_id, text="Московская ул., 20, Казань, Респ. Татарстан, 420111")
-            bot.send_location(chat_id=update.message.chat_id, latitude=55.7906596, longitude=49.1052328, live_period=80)
-            bot.send_message(chat_id=update.message.chat_id, text="Казань, Респ. Татарстан, 420061")
-            bot.send_location(chat_id=update.message.chat_id, latitude=55.7967087, longitude=49.1912644, live_period=80)
-            bot.send_message(chat_id=update.message.chat_id,
+        elif answer_dict["Type"] == "auto":
+            bot.send_message(chat_id=chat_id, text="Вот несколько наших автосалонов поблизости")
+            bot.send_message(chat_id=chat_id, text="Московская ул., 20, Казань, Респ. Татарстан, 420111")
+            bot.send_location(chat_id=chat_id, latitude=55.7906596, longitude=49.1052328, live_period=80)
+            bot.send_message(chat_id=chat_id, text="Казань, Респ. Татарстан, 420061")
+            bot.send_location(chat_id=chat_id, latitude=55.7967087, longitude=49.1912644, live_period=80)
+            bot.send_message(chat_id=chat_id,
                              text="ул. Габдуллы Тукая, 115 корпус 3, Казань, Респ. Татарстан")
-            bot.send_location(chat_id=update.message.chat_id, latitude=55.766002, longitude=49.1269089, live_period=80)
+            bot.send_location(chat_id=chat_id, latitude=55.766002, longitude=49.1269089, live_period=80)
         elif answer_dict["Type"] == "kasko":
-            bot.send_message(text="Информация о КАСКО: ", url='https://goo.gl/bbihY9')
+            keyboard = [[InlineKeyboardButton('Форма', url='https://goo.gl/forms/XAQP8XrHb48X7hOv2')]]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            update.message.reply_text(
+                'Форма для предварительного оформления КАСКО, оставшаяся часть документов будет оформлена в салоне',
+                reply_markup=reply_markup)
         elif answer_dict["Type"] == "osago":
-            bot.send_message(text="Информация об ОСАГО: ", url='https://goo.gl/ngmzCH')
+            keyboard = [[InlineKeyboardButton('Форма', url='https://goo.gl/forms/iJcFeID1ynYCXow83')]]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            update.message.reply_text('Форма для оформления ОСАГО', reply_markup=reply_markup)
         elif answer_dict["Type"] == "ticket":
             bot.send_message(chat_id=chat_id, text="Откуда: <i>" + answer_dict["Origin"] + "</i>\n" +
                                                    "Куда: <i>" + answer_dict["Destination"] + "</i>\n" +
