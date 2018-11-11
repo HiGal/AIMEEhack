@@ -30,6 +30,7 @@ def index():
 @app.route('/get_detail', methods=['POST'])
 def get_detail():
     data = request.get_json(silent=True)
+    print(data)
     json_obj = {}
     try:
         typeof = list(data['queryResult']['parameters'].keys()).pop()
@@ -39,7 +40,7 @@ def get_detail():
         elif list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
             json_obj = get_ticket_list(data)
         elif typeof == 'location':
-            get_location_detail()
+            json_obj=get_location_detail()
         else:
           json_obj = aimee_answer(data)
         return json_obj
