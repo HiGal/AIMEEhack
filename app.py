@@ -9,6 +9,7 @@ import dialogflow
 import pusher
 import os
 import speech
+from whatever_bot import get_location_detail
 
 app = Flask(__name__)
 
@@ -37,6 +38,8 @@ def get_detail():
             json_obj = get_movie_detail(data)
         elif list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
             json_obj = get_ticket_list(data)
+        elif typeof == 'location':
+            get_location_detail()
         else:
           json_obj = aimee_answer(data)
         return json_obj
