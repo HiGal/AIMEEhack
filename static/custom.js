@@ -37,7 +37,7 @@ function handle_response(data) {
                     <div class="col-sm-8 film-widget">
                         <div><b>Название:</b> ${mes['Title']}</div>
                         <div><b>Дата выхода:</b> ${mes['Released']} </div>
-                        <div><b>Лозунг:</b> ${mes['Tagline']}</div>
+                        <div><b>Слоган:</b> ${mes['Tagline']}</div>
                         <div><b>Оценка:</b> ${mes['Score']}</div>
                     </div>  
                 </div>
