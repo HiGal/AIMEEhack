@@ -4,7 +4,7 @@ import json
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-TELEGRAM_API_TOKEN = "570424499:AAGtsWf7uA_0BmbLyr5WDEE-7VT0mgh8biw"
+TELEGRAM_API_TOKEN = "768912317:AAEp51lJL9IniuEVEtjjZRShJBreVSXz2f8"
 NGROK = "https://7b68ccdb.ngrok.io"
 
 updater = Updater(token=TELEGRAM_API_TOKEN)
@@ -45,14 +45,14 @@ def responseView(bot, update, answer: str):
     if not answer.find("Type") == -1:
         answer_dict = json.loads(answer)
         if answer_dict["Type"] == "film":
-            film_description = "Фильм: " + answer_dict["Title"] + "\n" + \
-                               "Дата релиза: " + answer_dict["Released"] + "\n" + \
-                               "Трейлер: " + answer_dict["Video"] + "\n" + \
-                               "Постер: " + answer_dict["Poster"] + "\n" + \
-                               "Описание: " + answer_dict["Tagline"] + "\n" + \
-                               "Рейтинг: " + answer_dict["Score"] + "\n" + \
-                               "В прокате: " + answer_dict["Status"].replace("true", "Да").replace("false",
-                                                                                                   "Нет") + "\n"
+            film_description = ("Фильм: " + answer_dict["Title"] + "\n" +
+                                "Дата релиза: " + answer_dict["Released"] + "\n" +
+                                "Трейлер: " + answer_dict["Video"] + "\n" +
+                                "Слоган: " + answer_dict["Tagline"] + "\n" +
+                                "Рейтинг: " + answer_dict["Score"] + "\n" +
+                                "В прокате: " + answer_dict["Status"].replace("true", "Да").replace("false",
+                                                                                                    "Нет") + "\n")
+            bot.send_photo(chat_id=chat_id, photo=answer_dict["Poster"])
             if answer_dict["Status"] == "true":
                 keyboard = [[InlineKeyboardButton('Купить билеты:', url='https://karofilm.ru/theatres/26')]]
                 reply_markup = InlineKeyboardMarkup(keyboard)
@@ -81,8 +81,8 @@ def responseView(bot, update, answer: str):
                                                    "Destination:" + answer_dict["Destination"] + "\n" +
                                                    "Price:" + answer_dict["Price"])
             bot.send_message(chat_id=chat_id,
-                             text="Вы можете застраховать себя от несчастных случаев, потери багажа и задержки рейса" + "\n"
-                                  + "Узнать больше: ", url='https://sgabs.ru/products/pilgrim.php')
+                             text="Вы можете застраховать себя от несчастных случаев, потери багажа и задержки рейса" +
+                                  "\n" + "Узнать больше: ", url='https://sgabs.ru/products/pilgrim.php')
         else:
             bot.send_message(chat_id=chat_id, text=answer_dict)
     else:
@@ -91,7 +91,6 @@ def responseView(bot, update, answer: str):
 
 def voice_message(bot, update):
     message = update.message
-    chat_id = message.chat_id
     file_info = bot.get_file(message.voice.file_id)
     file = requests.get(file_info.file_path)
 
