@@ -13,23 +13,29 @@ def get_ticket_list(data):
                                 format(o_city, d_city)).content
     iata_details = json.loads(iata_details)
 
-    origin = iata_details['origin']['iata']
-    destination = iata_details['destination']['iata']
-    ticket_details = requests.get(
-        'http://api.travelpayouts.com/v1/prices/cheap?origin={0}&destination={1}&'
-        'token={2}'.format(origin, destination, api_key)).content
+    try:
 
-    ticket_details = json.loads(ticket_details)
-    print(ticket_details)
-    insurance = calculate_ensurance(ticket_details)
+        origin = iata_details['origin']['iata']
+        destination = iata_details['destination']['iata']
+        ticket_details = requests.get(
+            'http://api.travelpayouts.com/v1/prices/cheap?origin={0}&destination={1}&'
+            'token={2}'.format(origin, destination, api_key)).content
 
-    response = ("{{\"Type\": \"ticket\", \"Origin\": \"{0}\", \"Destination\": \"{1}\", \"Price\": \"{2}"
-                "\", \"Departure\": \"{3}\", \"Insurance\": \"{4}\"}}"
-                ).format(o_city,
-                         d_city,
-                         ticket_details['data'][destination]['0']['price'],
-                         ticket_details['data'][destination]['0']['departure_at'],
-                         insurance)
+        ticket_details = json.loads(ticket_details)
+        print(ticket_details)
+        insurance = calculate_ensurance(ticket_details)
+
+        ticket = list(ticket_details['data'][destination].keys())[0]
+
+        response = ("{{\"Type\": \"ticket\", \"Origin\": \"{0}\", \"Destination\": \"{1}\", \"Price\": \"{2}"
+                    "\", \"Departure\": \"{3}\", \"Insurance\": \"{4}\"}}"
+                    ).format(o_city,
+                             d_city,
+                             ticket_details['data'][destination][ticket]['price'],
+                             ticket_details['data'][destination][ticket]['departure_at'],
+                             insurance)
+    except(KeyError):
+        response = "Извините, но таких билетов нет."
     reply = {
 
         'fulfillmentText': response

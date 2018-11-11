@@ -22,12 +22,13 @@ channel.bind('new_message', function (data) {
         </div>
     `)
 });
+
 function handle_response(data) {
-        // append the bot repsonse to the div
-        try {
-            mes = JSON.parse(data.message);
-            if (mes['Type'] === 'film') {
-                $('.chat-container').append(`
+    // append the bot repsonse to the div
+    try {
+        mes = JSON.parse(data.message);
+        if (mes['Type'] === 'film') {
+            $('.chat-container').append(`
             <div class="chat-message col-md-6 offset-md-6 bot-message">
                 <div class="row">
                     <div class=" col-sm-4">
@@ -47,7 +48,7 @@ function handle_response(data) {
             </div>
             `);
 
-            if(mes['Status'] === 'true'){
+            if (mes['Status'] === 'true') {
                 $('.film-widget').append(`
                     <div><a class="btn btn-primary" href="https://karofilm.ru/theatres/26" target="_blank">
                         Купить билеты
@@ -55,10 +56,10 @@ function handle_response(data) {
                     </div>
                 `)
             }
-            }
+        }
 
-            if (mes["Type"] === "ticket") {
-                $('.chat-container').append(`
+        if (mes["Type"] === "ticket") {
+            $('.chat-container').append(`
             <div class="chat-message col-md-6 offset-md-6 bot-message">
                 <div class="row">
                     <div class="col-sm-8">
@@ -66,30 +67,38 @@ function handle_response(data) {
                         <div><b>Куда:</b> ${mes["Destination"]}</div>
                         <div><b>Цена:</b> ${mes["Price"]}<b> руб.</b></div>
                         <div><b>Дата отправления:</b> ${((mes["Departure"].toString()).replace('T', ' ')).replace('Z', ' ')} </div>
-                        <div><b>Предложение:</b> ${mes["Insurance"]}</div>
+                    </div>  
+                </div>
+            </div>
+                
+            
+      `);
+            $('.chat-container').append(`
+           <div class="chat-message col-md-6 offset-md-6 bot-message">
+           <div class="row">
+           <div class="col-sm-8">
+           <div> ${mes["Insurance"]}</div>
                          <div><a class="btn btn-primary" href="https://sgabs.ru/products/pilgrim.php" target="_blank">
                         Узнать больше
                     </a>
                     </div>
-                    </div>  
-                </div>
-            </div>
-            
-      `)
-            }
+                    </div>
+                    </div>
+                `)
+        }
 
-        } catch (e) {
+    } catch (e) {
 
-            $('.chat-container').append(`
+        $('.chat-container').append(`
             <div class="chat-message col-md-6 offset-md-6 bot-message">
                 ${data.message}
             </div>
              `)
-        }
-
-        // remove the loading indicator
-        $("#loading").remove();
     }
+
+    // remove the loading indicator
+    $("#loading").remove();
+}
 
 function submit_message(message) {
 
