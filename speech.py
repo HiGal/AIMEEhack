@@ -5,6 +5,7 @@ import os
 
 UNDEFINED_STRING='Не распознано'
 
+
 def speech_to_text(filename=None, bytes=None):
     request_id = uuid.uuid4().hex
     key = os.getenv('YANDEX_API_KEY')

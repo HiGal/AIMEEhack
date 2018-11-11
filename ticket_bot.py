@@ -41,7 +41,6 @@ def get_ticket_list(data):
         'fulfillmentText': response
     }
 
-    print(jsonify(reply))
     return jsonify(reply)
 
 

@@ -3,6 +3,7 @@ import json
 from flask import Flask, request, jsonify, render_template
 from movie_bot import get_movie_detail
 from ticket_bot import get_ticket_list
+from aimee import aimee_answer
 import requests
 import dialogflow
 import pusher
@@ -28,13 +29,14 @@ def index():
 @app.route('/get_detail', methods=['POST'])
 def get_detail():
     data = request.get_json(silent=True)
-    print(data)
     typeof = list(data['queryResult']['parameters'].keys()).pop()
     json_obj = {}
     if typeof == 'movie':
         json_obj = get_movie_detail(data)
-    if list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
+    elif list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
         json_obj = get_ticket_list(data)
+    else:
+        json_obj = aimee_answer(data)
     return json_obj
 
 
@@ -68,6 +70,7 @@ def send_message():
     message = request.form['message']
     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
     fulfillment_text = detect_intent_texts(project_id, "unique", message, 'ru')
+    print(fulfillment_text)
     response_text = {"message": fulfillment_text}
     # socketId = request.form['socketId']
     print(response_text)
@@ -86,9 +89,7 @@ def detect_voice():
     resp = requests.post(url='http://127.0.0.1:5000/send_message', data={"message": converted})
     resp = resp.json()
     resp["human_mes"] = converted
-    print(resp)
     return jsonify(resp)
-
 
 
 if __name__ == '__main__':
