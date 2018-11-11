@@ -55,6 +55,13 @@ function handle_response(data) {
                     </a>
                     </div>
                 `)
+            } else {
+                 $('.film-widget').append(`
+                    <div><b>
+                        К сожалению показ фильма в кинотеатрах закончился.
+                    </b>
+                    </div>
+                `)
             }
         }
 
@@ -67,6 +74,8 @@ function handle_response(data) {
                         <div><b>Куда:</b> ${mes["Destination"]}</div>
                         <div><b>Цена:</b> ${mes["Price"]}<b> руб.</b></div>
                         <div><b>Дата отправления:</b> ${((mes["Departure"].toString()).replace('T', ' ')).replace('Z', ' ')} </div>
+                        <div><b>Дата прилета:</b> ${((mes["Return"].toString()).replace('T', ' ')).replace('Z', ' ')} </div>
+                        <div><b>Продолжительность полета:</b> ${mes["Time"]}<b> руб.</b></div>
                     </div>  
                 </div>
             </div>
