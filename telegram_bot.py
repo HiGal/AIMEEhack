@@ -4,7 +4,9 @@ import json
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-updater = Updater(token="768912317:AAEp51lJL9IniuEVEtjjZRShJBreVSXz2f8")
+
+TELEGRAM_API_TOKEN = "570424499:AAGtsWf7uA_0BmbLyr5WDEE-7VT0mgh8biw"
+updater = Updater(token=TELEGRAM_API_TOKEN)
 dispatcher = updater.dispatcher
 
 print("Bot is alive")
@@ -82,6 +84,19 @@ def text_message(bot, update):
         bot.send_message(chat_id=chat_id, text=str(answer))
 
 
+def voice_message(bot, update):
+    message = update.message
+    chat_id = message.chat_id
+    file_info = bot.get_file(message.voice.file_id)
+    file = requests.get(file_info.file_path)
+
+    url = "https://94d914e9.ngrok.io/detect_voice"
+    question = requests.post(url=url, data=file.content)
+    response = question.json()
+    print(response)
+    bot.send_message(chat_id=chat_id, text=response['message'])
+
+
 def start_command(bot, update):
     chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text='Привет! Чем могу помочь?')
@@ -89,8 +104,10 @@ def start_command(bot, update):
 
 start_command_handler = CommandHandler('start', start_command)
 text_message_handler = MessageHandler(Filters.text, text_message)
+voice_message_handler = MessageHandler(Filters.voice, voice_message)
 
 dispatcher.add_handler(text_message_handler)
 dispatcher.add_handler(start_command_handler)
+dispatcher.add_handler(voice_message_handler)
 
 updater.start_polling(clean=True)
