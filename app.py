@@ -9,7 +9,7 @@ import dialogflow
 import pusher
 import os
 import speech
-from whatever_bot import get_location_detail
+from whatever_bot import get_location_detail, get_osago_detail, get_auto_detail, get_kasko_detail
 
 app = Flask(__name__)
 
@@ -40,9 +40,15 @@ def get_detail():
         elif list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
             json_obj = get_ticket_list(data)
         elif typeof == 'location':
-            json_obj=get_location_detail()
+            json_obj = get_location_detail()
+        elif typeof == 'osago':
+            json_obj = get_osago_detail()
+        elif typeof == 'auto':
+            json_obj = get_auto_detail()
+        elif typeof == 'kasko':
+            json_obj = get_kasko_detail()
         else:
-          json_obj = aimee_answer(data)
+            json_obj = aimee_answer(data)
         return json_obj
     except IndexError:
         return aimee_answer(data)
