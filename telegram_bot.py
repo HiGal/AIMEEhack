@@ -4,7 +4,6 @@ import json
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-
 TELEGRAM_API_TOKEN = "570424499:AAGtsWf7uA_0BmbLyr5WDEE-7VT0mgh8biw"
 NGROK = "https://7b68ccdb.ngrok.io"
 
@@ -35,10 +34,13 @@ def json_string_to_dict(text: str) -> dict:
 
 def text_message(bot, update):
     message = update.message
-    chat_id = update.message.chat_id
+
     temp_text = str(message.text).lower()
     answer = get_answer(temp_text)
 
+
+def response(bot, update, answer: str):
+    chat_id = update.message.chat_id
     if not answer.find("Type") == -1:
         answer_dict = json.loads(answer)
         if answer_dict["Type"] == "film":
@@ -95,8 +97,7 @@ def voice_message(bot, update):
     url = NGROK + "/detect_voice"
     question = requests.post(url=url, data=file.content)
     response = question.json()
-    print(response)
-    bot.send_message(chat_id=chat_id, text=response['message'])
+    response(bot, update, response['message'])
 
 
 def start_command(bot, update):
