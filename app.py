@@ -29,15 +29,19 @@ def index():
 @app.route('/get_detail', methods=['POST'])
 def get_detail():
     data = request.get_json(silent=True)
-    typeof = list(data['queryResult']['parameters'].keys()).pop()
     json_obj = {}
-    if typeof == 'movie':
-        json_obj = get_movie_detail(data)
-    elif list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
-        json_obj = get_ticket_list(data)
-    else:
-        json_obj = aimee_answer(data)
-    return json_obj
+    try:
+        typeof = list(data['queryResult']['parameters'].keys()).pop()
+
+        if typeof == 'movie':
+            json_obj = get_movie_detail(data)
+        elif list(data['queryResult']['parameters'].keys()).__contains__('geo-city'):
+            json_obj = get_ticket_list(data)
+        else:
+          json_obj = aimee_answer(data)
+        return json_obj
+    except IndexError:
+        return aimee_answer(data)
 
 
 def detect_intent_texts(project_id, session_id, text, language_code):
