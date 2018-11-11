@@ -39,11 +39,14 @@ def voice_message(bot, update):
     message = update.message
     chat_id = message.chat_id
     file_info = bot.get_file(message.voice.file_id)
-    file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(TELEGRAM_API_TOKEN, file_info.file_path))
-    f = open('./voice.ogg', 'wb')
-    f.write(file.content)
-    f.close()
-    bot.send_message(chat_id=chat_id, text="Voice блять")
+    file = requests.get(file_info.file_path)
+
+    url = "https://94d914e9.ngrok.io/detect_voice"
+    response_text = {file.content}
+    question = requests.post(url=url, data=response_text)
+    response = question.json()
+    print("LOG[JSON.RESPONSE]: " + str(response) + " " + str(question) + "\n")
+    bot.send_message(chat_id=chat_id, text="voice блять")
 
 
 def start_command(bot, update):
