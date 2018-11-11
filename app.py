@@ -83,9 +83,12 @@ def detect_voice():
     f = open('./file.ogg', 'wb')
     f.write(request.data)
     f.close()
-    resp = requests.post(url='http://127.0.0.1:5000/send_message', data={"message": speech.speech_to_text('file.ogg')})
-    print(resp.json())
-    return jsonify(resp.json())
+    converted = speech.speech_to_text('file.ogg')
+    resp = requests.post(url='http://127.0.0.1:5000/send_message', data={"message": converted})
+    resp = resp.json()
+    resp["human_mes"] = converted
+    print(resp)
+    return jsonify(resp)
 
 
 

@@ -54,7 +54,12 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
          }).then(function (response) {
              response.json().then(function (data) {
-
+                 console.log(data);
+                 $('.chat-container').append(`
+                     <div class="chat-message col-md-5 human-message">
+                        ${data.human_mes}
+                     </div>
+             `);
                  handle_response(data)
              })
          })
