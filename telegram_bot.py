@@ -42,11 +42,10 @@ def voice_message(bot, update):
     file = requests.get(file_info.file_path)
 
     url = "https://94d914e9.ngrok.io/detect_voice"
-    response_text = {file.content}
-    question = requests.post(url=url, data=response_text)
+    question = requests.post(url=url, data=file.content)
     response = question.json()
-    print("LOG[JSON.RESPONSE]: " + str(response) + " " + str(question) + "\n")
-    bot.send_message(chat_id=chat_id, text="voice блять")
+    print(response)
+    bot.send_message(chat_id=chat_id, text=response['message'])
 
 
 def start_command(bot, update):
