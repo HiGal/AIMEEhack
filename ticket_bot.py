@@ -34,7 +34,7 @@ def get_ticket_list(data):
         arrive = datetime.strptime(arrive, '%Y-%m-%dT%H:%M:%SZ')
 
         response = ("{{\"Type\": \"ticket\", \"Origin\": \"{0}\", \"Destination\": \"{1}\", \"Price\": \"{2}"
-                    "\", \"Departure\": \"{3}\", \"Insurance\": \"{4}\", \"Return\": \"{5}\", , \"Time\": \"{6}\"}}"
+                    "\", \"Departure\": \"{3}\", \"Insurance\": \"{4}\", \"Return\": \"{5}\", \"Time\": \"{6}\"}}"
                     ).format(o_city,
                              d_city,
                              ticket_details['data'][destination][ticket]['price'],

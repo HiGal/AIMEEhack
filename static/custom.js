@@ -66,7 +66,7 @@ function handle_response(data) {
         }
 
         if (mes["Type"] === "ticket") {
-            $('.chat-container').append(`
+                $('.chat-container').append(`
             <div class="chat-message col-md-6 offset-md-6 bot-message">
                 <div class="row">
                     <div class="col-sm-8">
@@ -75,7 +75,7 @@ function handle_response(data) {
                         <div><b>Цена:</b> ${mes["Price"]}<b> руб.</b></div>
                         <div><b>Дата отправления:</b> ${((mes["Departure"].toString()).replace('T', ' ')).replace('Z', ' ')} </div>
                         <div><b>Дата прилета:</b> ${((mes["Return"].toString()).replace('T', ' ')).replace('Z', ' ')} </div>
-                        <div><b>Продолжительность полета:</b> ${mes["Time"]}<b> руб.</b></div>
+                        <div><b>Продолжительность полета:</b> ${mes["Time"]}</div>
                     </div>  
                 </div>
             </div>
