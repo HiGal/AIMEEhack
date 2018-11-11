@@ -6,6 +6,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 
 TELEGRAM_API_TOKEN = "570424499:AAGtsWf7uA_0BmbLyr5WDEE-7VT0mgh8biw"
+NGROK = "https://7b68ccdb.ngrok.io"
+
 updater = Updater(token=TELEGRAM_API_TOKEN)
 dispatcher = updater.dispatcher
 
@@ -13,7 +15,7 @@ print("Bot is alive")
 
 
 def get_answer(text) -> str:
-    url = "https://7b68ccdb.ngrok.io/send_message"
+    url = NGROK + "/send_message"
     response_text = {"message": text}
     print("LOG[JSON.QUERY]: " + str(json.dumps(response_text)))
     question = requests.post(url=url, data=response_text)
@@ -90,7 +92,7 @@ def voice_message(bot, update):
     file_info = bot.get_file(message.voice.file_id)
     file = requests.get(file_info.file_path)
 
-    url = "https://94d914e9.ngrok.io/detect_voice"
+    url = NGROK + "/detect_voice"
     question = requests.post(url=url, data=file.content)
     response = question.json()
     print(response)
