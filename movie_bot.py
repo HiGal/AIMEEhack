@@ -32,7 +32,7 @@ def get_movie_detail(data):
 
     inTheatres = 'false'
 
-    if (date - today).total_seconds() < THREE_WEEKS:
+    if (today - date).total_seconds() < THREE_WEEKS:
         inTheatres = 'true'
 
 
